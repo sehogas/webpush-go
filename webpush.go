@@ -98,7 +98,7 @@ func SendNotification(message []byte, s *Subscription, options *Options) (*http.
 	// Combine application keys with dh
 	sharedX, sharedY := elliptic.Unmarshal(curve, dh)
 	if sharedX == nil {
-		return nil, errors.New("Unmarshal Error: Public key is not a valid point on the curve")
+		return nil, errors.New("unmarshal error: public key is not a valid point on the curve")
 	}
 
 	sx, _ := curve.ScalarMult(sharedX, sharedY, localPrivateKey)
