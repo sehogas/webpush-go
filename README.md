@@ -1,12 +1,10 @@
 # webpush-go
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/SherClockHolmes/webpush-go)](https://goreportcard.com/report/github.com/SherClockHolmes/webpush-go)
-[![GoDoc](https://godoc.org/github.com/SherClockHolmes/webpush-go?status.svg)](https://godoc.org/github.com/SherClockHolmes/webpush-go)
 
 Web Push API Encryption with VAPID support.
 
 ```bash
-go get -u github.com/SherClockHolmes/webpush-go
+go get -u github.com/sehogas/webpush-go
 ```
 
 ## Example
@@ -19,16 +17,25 @@ package main
 import (
 	"encoding/json"
 
-	webpush "github.com/SherClockHolmes/webpush-go"
+	webpush "github.com/sehogas/webpush-go"
 )
+
+const URL_ICON_APP = "https://......../icon-512x512.png"
 
 func main() {
 	// Decode subscription
 	s := &webpush.Subscription{}
 	json.Unmarshal([]byte("<YOUR_SUBSCRIPTION>"), s)
 
+	payload := struct {
+				notification struct { title, body, icon string }
+			}{ notification: { "Hello", "Test message", URL_ICON_APP }}
+	}
+
+	payloadJSON, err := json.Marshal(payload)
+
 	// Send Notification
-	resp, err := webpush.SendNotification([]byte("Test"), s, &webpush.Options{
+	resp, err := webpush.SendNotification([]byte(payloadJSON), s, &webpush.Options{
 		Subscriber:      "example@example.com",
 		VAPIDPublicKey:  "<YOUR_VAPID_PUBLIC_KEY>",
 		VAPIDPrivateKey: "<YOUR_VAPID_PRIVATE_KEY>",
@@ -54,7 +61,7 @@ if err != nil {
 
 ## Development
 
-1. Install [Go 1.11+](https://golang.org/)
+1. Install [Go 1.17+](https://golang.org/)
 2. `go mod vendor`
 3. `go test`
 
