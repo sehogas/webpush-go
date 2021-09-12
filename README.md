@@ -33,7 +33,10 @@ func main() {
 	}
 
 	payloadJSON, err := json.Marshal(payload)
-
+	if err != nil {
+		// TODO: Handle error
+	}
+	
 	// Send Notification
 	resp, err := webpush.SendNotification([]byte(payloadJSON), s, &webpush.Options{
 		Subscriber:      "example@example.com",
