@@ -1,4 +1,4 @@
-module github.com/SherClockHolmes/webpush-go
+module github.com/sehogas/webpush-go
 
 require (
 	github.com/golang-jwt/jwt/v4 v4.0.0
